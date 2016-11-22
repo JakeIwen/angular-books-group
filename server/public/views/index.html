@@ -49,9 +49,28 @@
       </form>
 
       <h2>Books</h2>
+
+
+
+      <select class="item" ng-options="item.genre for item in bookController.books" ng-model="books"> Choose Genre
+        <option ng-model="item.genre" value="item.genre"></option>
+        <!-- <option value="Mystery">Mystery</option>
+        <option value="How-To">How-To</option>
+        <option value="History">History</option> -->
+      </select>
+
       <div class="book" ng-repeat="book in bookController.books">
-        <p>{{book.title}} By: {{book.author}}</p>
-        <button ng-click="bookController.clickMe(book)">Click Me</button>
+
+        <input type="text" name="title" ng-model="book.title"/>
+        <input type="text" name="author" ng-model="book.author"/>
+        <input type="text" name="genre" ng-model="book.genre"/>
+        <input type="text" name="published" ng-model="book.published"/>
+        <input type="text" name="edition"  ng-model="book.edition"/>
+        <input type="text" name="publisher" ng-model="book.publisher"/>
+
+
+        <button ng-click="bookController.updateBook(book)">Update</button>
+        <button ng-click="bookController.deleteBook(book)">Delete</button>
       </div>
     </main>
 

@@ -32,7 +32,43 @@ myApp.controller("BookController", ["$http", function($http) {
     console.log(bookObj);
   }
 
+  self.deleteBook = function(bookObj) {
+    var id = bookObj.id;
+    console.log('book object id for delete: ', id);
+    console.log('delete book: ', self.deleteBook);
+    $http.delete('/books/' + id, self.deleteBook)
+      .then(function(response) {
+        console.log('DELETE finished. Get books again.');
+        getBooks();
+      });
+  }
+
+  self.updateBook = function(bookObj) {
+    var id = bookObj.id;
+    console.log('update book: ', bookObj);
+    console.log('self.book:', self.book);
+    $http.put('/books/' + id, bookObj)
+      .then(function(response) {
+        console.log('UPDATE finished. Get books again.');
+        getBooks();
+      });
+  }
+
 }]);
+
+myApp.filter('unique', function() {
+
+ return function (arr, field) {
+   var o = {}, i, l = arr.length, r = [];
+   for(i=0; i<l;i+=1) {
+     o[arr[i][field]] = arr[i];
+   }
+   for(i in o) {
+     r.push(o[i]);
+   }
+   return r;
+ };
+})
 
 // $(document).ready(function () {
 //     getBooks();
@@ -155,14 +191,7 @@ myApp.controller("BookController", ["$http", function($http) {
 //     var convertedDate = book.published.substr(0, 10);
 //     console.log(convertedDate);
 //
-//     $el.append('<input type="text" name="title" value="' + book.title + '" />');
-//     $el.append('<input type="text" name="author" value="' + book.author + '" />');
-//     $el.append('<input type="text" name="genre" value="' + book.genre + '" />');
-//     var newDate = $('<input type="date" name="published" />');
-//     newDate.val(convertedDate)
-//     $el.append(newDate);
-//     $el.append('<input type="number" name="edition" value="' + book.edition + '" />');
-//     $el.append('<input type="text" name="publisher" value="' + book.publisher + '" />');
+
 //
 //     $el.append('<button class="update">Update</button>');
 //     $el.append('<button class="delete">Delete</button>');
